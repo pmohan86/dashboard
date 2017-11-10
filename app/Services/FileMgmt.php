@@ -61,7 +61,7 @@ class FileMgmt
     {
         try {
             $this->check_file_exists($file_name);
-            $data = Excel::load($this->storage_path.'/'.$file_name, function($excel) use($id) {
+            $data = Excel::load($this->storage_path.'/'.$file_name, function ($excel) use ($id) {
                 if ($id != null) {
                     $active_sheet = $excel->getActiveSheet();
                     $highest_row = $active_sheet->getHighestRow();
