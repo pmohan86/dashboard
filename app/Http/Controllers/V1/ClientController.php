@@ -7,6 +7,8 @@ use App\Services\FileMgmt;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class ClientController extends Controller
 {
@@ -91,11 +93,49 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
-        $input = $request->all();
-        $data_to_be_added = array_only($input, $this->fields_for_display);
-        $this->file_mgmt->add_to_file($this->client_list_file_name, $data_to_be_added);
+        try {
+            $form_input = $request->all();
 
-        return $this->index();
+            $validator = $this->validate_input($form_input);
+            if ($validator->fails()) {
+                return redirect(route('clients.create'))
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            $data_to_be_added = array_only($form_input, $this->fields_for_display);
+            $this->file_mgmt->add_to_file($this->client_list_file_name, $data_to_be_added);
+            $request->session()->flash('success', 'User created successfully!');
+
+            return redirect(route('clients.create'))
+                        ->withInput();
+        } catch (Exception $e) {
+            Log::critical('Index Page. Something went wrong. Exception is '.$e);
+            ExecHandler::render_error_page();
+        }
+    }
+
+    private function validate_input($form_input)
+    {
+        $validator = Validator::make($form_input, [
+            'name'   => 'required|string',
+            'gender' => [
+                'required',
+                Rule::in(['female', 'male', 'others']),
+            ],
+            'dob'                    => 'required',
+            'phone'                  => 'required|digits_between:10,15',
+            'email'                  => 'required|email',
+            'address'                => 'required',
+            'nationality'            => 'required|alpha',
+            'education'              => 'required|alpha',
+            'preferred_contact_mode' => [
+                'required',
+                Rule::in(['email', 'phone', 'none']),
+            ],
+        ]);
+
+        return $validator;
     }
 
     /**
@@ -108,6 +148,14 @@ class ClientController extends Controller
     public function show($id)
     {
         //
+        try {
+            $view_data['result'] = $this->file_mgmt->read($this->client_list_file_name, $id);
+
+            return view('dashboard_show', $view_data);
+        } catch (Exception $e) {
+            Log::critical('Index Page. Something went wrong. Exception is '.$e);
+            ExecHandler::render_error_page();
+        }
     }
 
     /**
