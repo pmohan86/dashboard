@@ -56,8 +56,8 @@ class ClientController extends Controller
             $per_page = 3;
             $currentPageSearchResults = $view_data['result']->slice(($current_page - 1) * $per_page, $per_page)->all();
             $view_data['result'] = new Paginator($currentPageSearchResults, $per_page, $current_page, ['path' => Paginator::resolveCurrentPath()]);
-            $view_data['has_more_pages'] = (count($currentPageSearchResults) >= $per_page) ? true : false;
-
+            $view_data['has_more_pages'] = (($result_count > ($current_page * $per_page))) ? true : false;
+            
             return view('dashboard_index', $view_data);
         } catch (Exception $e) {
             Log::critical('Index Page. Something went wrong. Exception is '.$e);
