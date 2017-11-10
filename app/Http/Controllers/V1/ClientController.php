@@ -109,7 +109,7 @@ class ClientController extends Controller
 
             return redirect(route('clients.create'))
                         ->withInput();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             Log::critical('Index Page. Something went wrong. Exception is '.$e);
             ExecHandler::render_error_page();
         }
@@ -118,20 +118,20 @@ class ClientController extends Controller
     private function validate_input($form_input)
     {
         $validator = Validator::make($form_input, [
-            'name' => 'required|string',
+            'name'   => 'required|string',
             'gender' => [
                 'required',
-                Rule::in(['female', 'male', 'others'])
+                Rule::in(['female', 'male', 'others']),
             ],
-            'dob' => 'required',
-            'phone' => 'required|digits_between:10,15',
-            'email' => 'required|email',
-            'address' => 'required',
-            'nationality' => 'required|alpha',
-            'education' => 'required|alpha',
+            'dob'                    => 'required',
+            'phone'                  => 'required|digits_between:10,15',
+            'email'                  => 'required|email',
+            'address'                => 'required',
+            'nationality'            => 'required|alpha',
+            'education'              => 'required|alpha',
             'preferred_contact_mode' => [
                 'required',
-                Rule::in(['email', 'phone', 'none'])
+                Rule::in(['email', 'phone', 'none']),
             ],
         ]);
 
