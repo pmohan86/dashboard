@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('v1')->group(function () {
+    Route::resource('clients', 'V1\ClientController', ['except' => ['edit', 'update', 'destroy']]);
+});
