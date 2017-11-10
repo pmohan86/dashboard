@@ -42,3 +42,6 @@ Task:Things to do
    4. Codeclimate
    5. StyleCI
    
+5. Yet to do:
+   1. Automated testing
+   
