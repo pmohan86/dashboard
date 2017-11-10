@@ -50,4 +50,16 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    /**
+     * Render an error page for exception.
+     *
+     * @param  \Exception  $exception
+     * @return void
+     */
+    public function render_error_page()
+    {
+        return view('error_page');
+    }
+
 }
