@@ -57,11 +57,17 @@ class FileMgmt
         }
     }
 
-    public function read($file_name)
+    public function read($file_name, $id = null)
     {
         try {
             $this->check_file_exists($file_name);
-            $data = Excel::load($this->storage_path.'/'.$file_name)->get();
+            $data = Excel::load($this->storage_path.'/'.$file_name, function($excel) use($id) {
+                if ($id != null) {
+                    $active_sheet = $excel->getActiveSheet();
+                    $highest_row = $active_sheet->getHighestRow();
+                    $excel->skipRows($highest_row - $id - 1)->takeRows(1);
+                }
+            })->get();
             Log::info('Data fetched successfully. Data is '.$data);
 
             return $data;

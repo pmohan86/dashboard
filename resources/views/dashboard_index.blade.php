@@ -31,9 +31,9 @@
 							    <tbody>
 							    	@foreach($result as $list)
 							    		<tr>
-								    		<td> {{ $list['name'] }} </td>
+								    		<td> <a href="{{ url()->current().'/'.$list['client_id'] }}"> {{ $list['name'] }} </a> </td>
 								    		<td> {{ $list['gender'] }} </td>
-								    		<td> {{ $list['dob'] }} </td>
+								    		<td> {{ date('d-M-Y', strtotime($list['dob'])) }} </td>
 								    		<td> {{ $list['phone'] }} </td>
 								    		<td> {{ $list['email'] }} </td>
 								    		<td> {{ $list['address'] }} </td>

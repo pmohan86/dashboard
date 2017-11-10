@@ -108,6 +108,14 @@ class ClientController extends Controller
     public function show($id)
     {
         //
+        try {
+            $view_data['result'] = $this->file_mgmt->read($this->client_list_file_name, $id);
+
+            return view('dashboard_show', $view_data);
+        } catch (Exception $e) {
+            Log::critical('Index Page. Something went wrong. Exception is '.$e);
+            ExecHandler::render_error_page();
+        }
     }
 
     /**
