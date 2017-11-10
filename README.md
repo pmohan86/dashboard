@@ -44,4 +44,5 @@ Task:Things to do
    
 5. Yet to do:
    1. Automated testing
+   2. Detailed attention to security
    
