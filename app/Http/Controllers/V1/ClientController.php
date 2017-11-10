@@ -7,8 +7,8 @@ use App\Services\FileMgmt;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
-use Validator;
 use Illuminate\Validation\Rule;
+use Validator;
 
 class ClientController extends Controller
 {
@@ -97,20 +97,20 @@ class ClientController extends Controller
             $input = $request->all();
 
             $validator = Validator::make($input, [
-                'name' => 'required|string',
+                'name'   => 'required|string',
                 'gender' => [
                     'required',
-                    Rule::in(['female', 'male', 'others'])
+                    Rule::in(['female', 'male', 'others']),
                 ],
-                'dob' => 'required',
-                'phone' => 'required|digits_between:10,15',
-                'email' => 'required|email',
-                'address' => 'required',
-                'nationality' => 'required|alpha',
-                'education' => 'required|alpha',
+                'dob'                    => 'required',
+                'phone'                  => 'required|digits_between:10,15',
+                'email'                  => 'required|email',
+                'address'                => 'required',
+                'nationality'            => 'required|alpha',
+                'education'              => 'required|alpha',
                 'preferred_contact_mode' => [
                     'required',
-                    Rule::in(['email', 'phone', 'none'])
+                    Rule::in(['email', 'phone', 'none']),
                 ],
             ]);
 
@@ -126,7 +126,7 @@ class ClientController extends Controller
 
             return redirect(route('clients.create'))
                         ->withInput();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             Log::critical('Index Page. Something went wrong. Exception is '.$e);
             ExecHandler::render_error_page();
         }
