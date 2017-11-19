@@ -1,5 +1,5 @@
 # dashboard
-Laravel client information collection app
+Laravel 5.5 client information collection app
 
 Task:Things to do
 1. Create a form to get
