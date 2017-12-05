@@ -35,7 +35,7 @@ Task:Things to do
    1. https://github.com/Maatwebsite/Laravel-Excel - for working with csv files
    2. rollbar/rollbar-laravel for logging
 
-4. Integrations made (basic level only as all of these were new for me to learn and I hardly had 2 days to work on this task due to my health issue):
+4. Integrations made:
    1. Rollbar
    2. Docker
    3. Travis CI
